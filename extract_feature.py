@@ -11,9 +11,11 @@ import math
 
 
 def make_sprite(images, output_path):
+    imgs = [Image.fromarray(img) for img in images]
+
     # get image size
-    w, h = images[0].size
-    m_h = m_w = math.floor(np.sqrt(len(images))) + 1
+    w, h = imgs[0].size
+    m_h = m_w = math.floor(np.sqrt(len(imgs))) + 1
 
     # make master image
     # number of images in a row and a column must be "same"
@@ -24,7 +26,7 @@ def make_sprite(images, output_path):
     )
 
     # paste images to master image
-    for i, img in enumerate(images):
+    for i, img in enumerate(imgs):
         px = (i % m_w) * w
         py = (i // m_w) * h
         master.paste(img, (px, py))
