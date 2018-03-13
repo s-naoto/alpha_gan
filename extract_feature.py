@@ -56,9 +56,9 @@ with tf.Session() as sess:
         imgs.append(x_real)
         feats.append(feat)
 
-    images = np.r_[imgs]
-    features = np.r_[feats]
-
+    images = np.concatenate(imgs)
+    features = np.concatenate(feats)
+    print(images.shape, features.shape)
     summary_writer = tf.summary.FileWriter('encoder')
     tensor = tf.Variable(features, trainable=False, name='extracted_features')
     sess.run(tf.variables_initializer([tensor]))
@@ -72,7 +72,7 @@ with tf.Session() as sess:
 
     # sprite画像のパスを設定
     embedding.sprite.image_path = 'color_mnist_splite.png'
-    embedding.sprite.single_image_dim.extend(28)
+    embedding.sprite.single_image_dim.extend((28, 28))
 
     # 設定を保存
     projector.visualize_embeddings(summary_writer, config)
