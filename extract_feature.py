@@ -58,9 +58,8 @@ with tf.Session() as sess:
         imgs.append(x_real)
         feats.append(feat)
 
-    images = np.concatenate(imgs)
+    images = (np.concatenate(imgs) + 1.) / 2. * 255.
     features = np.concatenate(feats)
-    print(images.shape, features.shape)
     summary_writer = tf.summary.FileWriter('encoder')
     tensor = tf.Variable(features, trainable=False, name='extracted_features')
     sess.run(tf.variables_initializer([tensor]))
@@ -79,4 +78,4 @@ with tf.Session() as sess:
     # 設定を保存
     projector.visualize_embeddings(summary_writer, config)
 
-    make_sprite(images, 'encoder/color_mnist_splite.png')
+    make_sprite(np.uint8(images), 'encoder/color_mnist_splite.png')
