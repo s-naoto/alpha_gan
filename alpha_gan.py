@@ -7,6 +7,7 @@ import os
 
 
 class BaseModel(snt.AbstractModule):
+    # Base Model
     def __init__(self, name):
         super(BaseModel, self).__init__(name=name)
 
@@ -19,6 +20,7 @@ class BaseModel(snt.AbstractModule):
 
 
 class CodeDiscriminator(BaseModel):
+    # Code Discriminator
     def __init__(self, name='Code_Discriminator', regularization=1.e-4):
         super(CodeDiscriminator, self).__init__(name=name)
 
@@ -43,25 +45,28 @@ class CodeDiscriminator(BaseModel):
 
 class AlphaGAN(object):
     def __init__(self, encoder, generator, discriminator, data, latent_size=10, lamb=1., max_iter=1000):
+        # encoder
         self.e = encoder
+        # generator
         self.g = generator
+        # discriminator
         self.d = discriminator
-
-        self.data = data
-
+        # code discriminator
         self.c = CodeDiscriminator()
 
+        # data
+        self.data = data
+
+        # parameters
         self._latent_size = latent_size
         self._lamb = lamb
         self._max_iter = max_iter
 
         self._eps = 1.e-9
 
-        self.x_real = None
-        self.z_hat = None
-        self.x_rec = None
-        self.z = None
-        self.x_gen = None
+        # variables x, z
+        self.x_real = self.x_rec = self.x_gen = None
+        self.z_hat = self.z = None
 
         # loss, optimizer, training step
         self.loss_e = self.optimizer_e = self.train_step_e = None
