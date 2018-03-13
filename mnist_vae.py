@@ -38,6 +38,12 @@ class MNISTEncoder(BaseModel):
         s = self.variance(h)
         return mu, s
 
+    def encode(self, x, is_train=False):
+        with tf.name_scope('encode'):
+            mu, s = self(x, is_train)
+            z = mu + s * tf.random_normal(shape=mu.shape)
+        return z
+
 
 # Generator
 class MNISTGenerator(BaseModel):
