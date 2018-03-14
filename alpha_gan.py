@@ -208,13 +208,13 @@ class AlphaGAN(object):
             # train
             for i in range(self._max_iter):
                 # update encoder
-                loss_e, _ = sess.run([alpha_gan.loss_e, alpha_gan.train_step_e])
+                loss_e, _ = sess.run([self.loss_e, self.train_step_e])
                 # update generator
-                loss_g, _ = sess.run([alpha_gan.loss_g, alpha_gan.train_step_g])
+                loss_g, _ = sess.run([self.loss_g, self.train_step_g])
                 # update discriminator
-                loss_d, _ = sess.run([alpha_gan.loss_d, alpha_gan.train_step_d])
+                loss_d, _ = sess.run([self.loss_d, self.train_step_d])
                 # update code discriminator
-                loss_c, _ = sess.run([alpha_gan.loss_c, alpha_gan.train_step_c])
+                loss_c, _ = sess.run([self.loss_c, self.train_step_c])
 
                 summary = sess.run(merged)
 
